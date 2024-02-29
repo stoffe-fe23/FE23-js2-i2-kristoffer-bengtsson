@@ -1,9 +1,7 @@
 import { body, validationResult } from "express-validator";
 import { taskExists } from './fakedb.js';
 
-// isUUID('all')
 
-const categoryNames = ['Frontend development', 'Backend development', 'User Experience design'];
 const validCategories = ['frontend', 'backend', 'ux'];
 
 
@@ -24,7 +22,6 @@ function handleValidationErrors(req, res, next) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // DELETE TASK VALIDATION
-
 const deleteTaskValidators = [
     body("taskid")
         .exists().withMessage('The taskid of the task to delete must be set.').bail()
@@ -51,7 +48,6 @@ async function validateDeleteTaskExists(value) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // DONE TASK VALIDATION
-
 const doneTaskValidators = [
     body("taskid")
         .exists().withMessage('The taskid of the task to complete must be set.').bail()
@@ -79,7 +75,6 @@ async function validateDoneTaskExists(value) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // ASSIGN TASK VALIDATION
-
 const assignTaskValidators = [
     body("taskid")
         .exists().withMessage('The taskid of the task to assign must be set.').bail()

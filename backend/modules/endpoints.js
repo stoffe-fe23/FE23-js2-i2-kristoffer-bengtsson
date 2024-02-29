@@ -36,7 +36,6 @@ tasksRouter.get('/list', (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////
 // Create a new task
 tasksRouter.post("/add", newTaskValidators, handleValidationErrors, (req, res) => {
-
     const newTask = {
         taskid: crypto.randomUUID(),
         time: Date.now(),
@@ -52,47 +51,40 @@ tasksRouter.post("/add", newTaskValidators, handleValidationErrors, (req, res) =
         res.status(500);
         res.json({ error: `Error! Unable to save new task. (${error.message})` });
     });
-
 });
 
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Assign a task to someone
 tasksRouter.patch("/assign", assignTaskValidators, handleValidationErrors, (req, res) => {
-
     assignTask(req.body.taskid, req.body.assigned).then(() => {
         res.json(req.body);
     }).catch((error) => {
         res.status(500);
         res.json({ error: `Error! Unable to assign task. (${error.message})` });
     });
-
 });
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Mark a task as completed
 tasksRouter.patch("/done", doneTaskValidators, handleValidationErrors, (req, res) => {
-
     setTaskDone(req.body.taskid).then(() => {
         res.json(req.body);
     }).catch((error) => {
         res.status(500);
         res.json({ error: `Error! Unable to mark task as done. (${error.message})` });
     });
-
 });
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Remove a task from the board
 tasksRouter.delete("/delete", deleteTaskValidators, handleValidationErrors, (req, res) => {
-
     deleteTask(req.body.taskid).then(() => {
         res.json(req.body);
     }).catch((error) => {
         res.status(500);
         res.json({ error: `Error! Unable to delete task. (${error.message})` });
     });
-
 });
 
 
