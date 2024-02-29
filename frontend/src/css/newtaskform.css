@@ -1,0 +1,47 @@
+#new-task-form {
+    display: grid;
+    grid-template-columns: 4fr 2fr 1fr;
+    justify-content: center;
+    align-items: stretch;
+    padding: 1rem;
+    margin: 0;
+    gap: 0;
+    max-width: 650px;
+}
+
+#new-task-form input,
+#new-task-form button {
+    display: block;
+    padding: 0.5rem;
+    border: 0;
+    height: 100%;
+    outline: 0;
+}
+
+#new-task-form select {
+    display: block;
+    border: 0;
+    height: 100%;
+    outline: 0;
+}
+
+#new-task-text {
+    border-radius: 15px 0px 0px 15px;
+    margin: 0;
+}
+
+#new-task-type {
+    margin: 0;
+}
+
+#new-task-submit {
+    border-radius: 0px 15px 15px 0px;
+    margin: 0;
+    background-color: orange;
+    cursor: pointer;
+}
+
+#new-task-submit:hover {
+    background-color: green;
+    color: white;
+}

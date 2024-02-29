@@ -1,0 +1,4 @@
+.parcel-cache
+node_modules
+frontend/dist
+package-lock.json

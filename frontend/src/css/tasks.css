@@ -1,0 +1,156 @@
+#board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "tasks-todo tasks-wip tasks-done";
+    gap: 1rem;
+    padding: 1rem;
+}
+
+#board > section {
+    box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.25);
+}
+
+#board > section > h2 {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 0px 0px 1rem 0px;
+}
+
+#board > section > form,
+#board > section > div {
+    display: flex;
+    gap: 0.4rem;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+#board article {
+    position: relative;
+}
+
+#tasks-todo {
+    grid-area: tasks-todo;
+}
+
+#tasks-wip {
+    grid-area: tasks-wip;
+}
+
+#tasks-done {
+    grid-area: tasks-done;
+}
+
+.task-box {
+    padding: 1.2rem;
+}
+
+#tasks-todo .task-box {
+    padding-bottom: 1rem;
+}
+
+#tasks-wip .task-box {
+    padding-bottom: 1.5rem;
+}
+
+#tasks-done .task-box {
+    padding-bottom: 2rem;
+}
+
+.assigned-to {
+    font-style: italic;
+}
+
+.assigned-to::before {
+    content: " ► ";
+}
+
+
+.task-assign-form {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    justify-content: center;
+    align-items: stretch;
+    padding: 1rem 1rem 0px 1rem;
+    margin: 1.5rem 0px 0px 0px;
+    gap: 0;
+}
+
+.task-assign-form input,
+.task-assign-form button {
+    border: 0;
+    padding: 0.5rem;
+    margin: 0px;
+    outline: 0;
+}
+
+.task-assign-form input {
+    border-radius: 15px 0px 0px 15px;
+    background-color: rgb(231, 231, 231);
+    padding-left: 1rem;
+}
+
+
+.task-assign-form button {
+    border-radius: 0px 15px 15px 0px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.task-assign-form button:hover,
+.task-assign-form button:focus,
+.task-assign-form button:active {
+    background-color: orange;
+    color: black;
+}
+
+
+.task-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1.5rem 0px 0px 0px;
+}
+
+#tasks-wip-box button {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-color: black;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: 0;
+    border-radius: 15px 0px 0px;
+    cursor: pointer;
+}
+
+#tasks-wip-box button:hover,
+#tasks-wip-box button:focus,
+#tasks-wip-box button:active {
+    background-color: orange;
+    color: black;
+}
+
+#tasks-done-box button {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-color: black;
+    color: white;
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 15px 0px 0px 0px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+
+}
+
+#tasks-done-box button:hover,
+#tasks-done-box button:focus,
+#tasks-done-box button:active {
+    background-color: darkred;
+
+}
