@@ -1,11 +1,8 @@
 import { loadTasks, saveNewTask, assignTask, setTaskDone, deleteTask } from "./fakedb.js";
 import { Router } from "express";
 import {
-    validateNewTask,
+    handleValidationErrors,
     validateCategory,
-    validateAssignTask,
-    validateDoneTask,
-    validateDeleteTask,
     newTaskValidators,
     assignTaskValidators,
     doneTaskValidators,
@@ -38,64 +35,64 @@ tasksRouter.get('/list', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Create a new task
-tasksRouter.post("/add", newTaskValidators, (req, res) => {
-    if (validateNewTask(req, res)) {
-        const newTask = {
-            taskid: crypto.randomUUID(),
-            time: Date.now(),
-            state: "todo",
-            category: req.body.category ?? "none",
-            message: req.body.message ?? "No text",
-            assigned: null
-        }
+tasksRouter.post("/add", newTaskValidators, handleValidationErrors, (req, res) => {
 
-        saveNewTask(newTask).then(() => {
-            res.json(newTask);
-        }).catch((error) => {
-            res.status(500);
-            res.json({ error: `Error! Unable to save new task. (${error.message})` });
-        });
+    const newTask = {
+        taskid: crypto.randomUUID(),
+        time: Date.now(),
+        state: "todo",
+        category: req.body.category ?? "none",
+        message: req.body.message ?? "No text",
+        assigned: null
     }
+
+    saveNewTask(newTask).then(() => {
+        res.json(newTask);
+    }).catch((error) => {
+        res.status(500);
+        res.json({ error: `Error! Unable to save new task. (${error.message})` });
+    });
+
 });
 
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Assign a task to someone
-tasksRouter.patch("/assign", assignTaskValidators, (req, res) => {
-    if (validateAssignTask(req, res)) {
-        assignTask(req.body.taskid, req.body.assigned).then(() => {
-            res.json(req.body);
-        }).catch((error) => {
-            res.status(500);
-            res.json({ error: `Error! Unable to assign task. (${error.message})` });
-        });
-    }
+tasksRouter.patch("/assign", assignTaskValidators, handleValidationErrors, (req, res) => {
+
+    assignTask(req.body.taskid, req.body.assigned).then(() => {
+        res.json(req.body);
+    }).catch((error) => {
+        res.status(500);
+        res.json({ error: `Error! Unable to assign task. (${error.message})` });
+    });
+
 });
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Mark a task as completed
-tasksRouter.patch("/done", doneTaskValidators, (req, res) => {
-    if (validateDoneTask(req, res)) {
-        setTaskDone(req.body.taskid).then(() => {
-            res.json(req.body);
-        }).catch((error) => {
-            res.status(500);
-            res.json({ error: `Error! Unable to mark task as done. (${error.message})` });
-        });
-    }
+tasksRouter.patch("/done", doneTaskValidators, handleValidationErrors, (req, res) => {
+
+    setTaskDone(req.body.taskid).then(() => {
+        res.json(req.body);
+    }).catch((error) => {
+        res.status(500);
+        res.json({ error: `Error! Unable to mark task as done. (${error.message})` });
+    });
+
 });
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Remove a task from the board
-tasksRouter.delete("/delete", deleteTaskValidators, (req, res) => {
-    if (validateDeleteTask(req, res)) {
-        deleteTask(req.body.taskid).then(() => {
-            res.json(req.body);
-        }).catch((error) => {
-            res.status(500);
-            res.json({ error: `Error! Unable to delete task. (${error.message})` });
-        });
-    }
+tasksRouter.delete("/delete", deleteTaskValidators, handleValidationErrors, (req, res) => {
+
+    deleteTask(req.body.taskid).then(() => {
+        res.json(req.body);
+    }).catch((error) => {
+        res.status(500);
+        res.json({ error: `Error! Unable to delete task. (${error.message})` });
+    });
+
 });
 
 

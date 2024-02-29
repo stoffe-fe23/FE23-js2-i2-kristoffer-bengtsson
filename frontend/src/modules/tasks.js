@@ -2,12 +2,32 @@ import * as Utilities from './utilities.js';
 import RestApi from './RestApi.js';
 import { showError } from './interface.js';
 
+const API_URL = 'http://localhost:3000/tasks';
+// const API_URL = 'http://192.168.1.3:3000/tasks';
+
+
+document.querySelector("#debug").addEventListener("click", (event) => {
+    const api = new RestApi(API_URL + '/done');
+    const taskFormData = new FormData();
+    // taskFormData.set("taskid", "5d2dac6c-5132-4234-9389-d08934d77a31");
+    // taskFormData.set("taskid", "a107fad9-89be-48d4-8858-0baee295ead4");
+    taskFormData.set("taskid", "task");
+
+
+
+    api.updateJson(taskFormData).then((taskData) => {
+        showTasks();
+    }).catch((error) => {
+        showError(error.message);
+    });
+});
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Remove a task from the board
 export function deleteTask(taskFormData) {
-    const api = new RestApi('http://localhost:3000/tasks/delete');
+    const api = new RestApi(API_URL + '/delete');
 
     api.deleteJson(taskFormData).then((taskData) => {
         showTasks();
@@ -20,7 +40,7 @@ export function deleteTask(taskFormData) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Move a task to the Done column
 export function setTaskDone(taskFormData) {
-    const api = new RestApi('http://localhost:3000/tasks/done');
+    const api = new RestApi(API_URL + '/done');
 
     api.updateJson(taskFormData).then((taskData) => {
         showTasks();
@@ -32,7 +52,7 @@ export function setTaskDone(taskFormData) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Set an assigned name and move task to the In Progress column
 export function assignTask(taskFormData) {
-    const api = new RestApi('http://localhost:3000/tasks/assign');
+    const api = new RestApi(API_URL + '/assign');
 
     api.updateJson(taskFormData).then((taskData) => {
         showTasks();
@@ -44,7 +64,7 @@ export function assignTask(taskFormData) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Add a new task to the ToDo column
 export function addNewTask(taskFormData) {
-    const api = new RestApi('http://localhost:3000/tasks/add');
+    const api = new RestApi(API_URL + '/add');
 
     api.postJson(taskFormData).then((taskData) => {
         showTasks();
@@ -57,7 +77,7 @@ export function addNewTask(taskFormData) {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Display all tasks on the page
 export function showTasks() {
-    const api = new RestApi('http://localhost:3000/tasks/list');
+    const api = new RestApi(API_URL + '/list');
     api.getJson().then((taskData) => {
         const todoBox = document.querySelector("#tasks-todo-box");
         const wipBox = document.querySelector("#tasks-wip-box");

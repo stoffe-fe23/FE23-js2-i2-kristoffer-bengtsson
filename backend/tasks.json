@@ -30,5 +30,21 @@
         "category": "frontend",
         "message": "Slut för i dag?",
         "assigned": "John Doe"
+    },
+    {
+        "taskid": "43a099d6-79e3-4ac9-b641-dd72ccf63424",
+        "time": 1709216936974,
+        "state": "done",
+        "category": "ux",
+        "message": "swip?",
+        "assigned": "fooo"
+    },
+    {
+        "taskid": "3708db8e-2de3-40e3-b03c-37991d86ac33",
+        "time": 1709217498654,
+        "state": "done",
+        "category": "backend",
+        "message": "Fungerar detta nu måntro?",
+        "assigned": "Taskmaster"
     }
 ]

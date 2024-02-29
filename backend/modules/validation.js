@@ -6,6 +6,22 @@ import { taskExists } from './fakedb.js';
 const categoryNames = ['Frontend development', 'Backend development', 'User Experience design'];
 const validCategories = ['frontend', 'backend', 'ux'];
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+// Stop if any validation errors are found and send them to the client. 
+function handleValidationErrors(req, res, next) {
+    const errorList = validationResult(req);
+    if (errorList.errors.length > 0) {
+        console.log("Validation errors found: " + errorList.errors.length, errorList.errors);
+        res.status(400);
+        res.json({ error: 'Validation error', data: errorList.errors });
+    }
+    else {
+        next();
+    }
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // DELETE TASK VALIDATION
 
@@ -16,16 +32,6 @@ const deleteTaskValidators = [
         .custom(validateDeleteTaskExists).bail(),
 ];
 
-function validateDeleteTask(req, res) {
-    const errorList = validationResult(req);
-    if (errorList.errors.length > 0) {
-        console.log("validateDeleteTask errors found: " + errorList.errors.length, errorList.errors);
-        res.status(400);
-        res.json({ error: 'Validation error', data: errorList.errors });
-        return false;
-    }
-    return true;
-}
 
 async function validateDeleteTaskExists(value) {
     return new Promise((resolve, reject) => {
@@ -49,21 +55,10 @@ async function validateDeleteTaskExists(value) {
 const doneTaskValidators = [
     body("taskid")
         .exists().withMessage('The taskid of the task to complete must be set.').bail()
-        .isUUID('all').withMessage('Invalid taskid to complete specified.').bail()
+        .isUUID('all').withMessage('Invalid taskid specified.').bail()
         .custom(validateDoneTaskExists).bail(),
 ];
 
-
-function validateDoneTask(req, res) {
-    const errorList = validationResult(req);
-    if (errorList.errors.length > 0) {
-        console.log("validateDoneTask errors found: " + errorList.errors.length, errorList.errors);
-        res.status(400);
-        res.json({ error: 'Validation error', data: errorList.errors });
-        return false;
-    }
-    return true;
-}
 
 async function validateDoneTaskExists(value) {
     return new Promise((resolve, reject) => {
@@ -96,17 +91,6 @@ const assignTaskValidators = [
         .isString().withMessage('The name to assign the task to must be a string.').bail()
         .isLength({ min: 2, max: 20 }).withMessage('The name to assign the task to must be between 2-20 characters long.').bail()
 ];
-
-function validateAssignTask(req, res) {
-    const errorList = validationResult(req);
-    if (errorList.errors.length > 0) {
-        console.log("validateAssignTask errors found: " + errorList.errors.length, errorList.errors);
-        res.status(400);
-        res.json({ error: 'Validation error', data: errorList.errors });
-        return false;
-    }
-    return true;
-}
 
 
 async function validateAssignTaskExists(value) {
@@ -141,18 +125,6 @@ const newTaskValidators = [
 ];
 
 
-function validateNewTask(req, res) {
-    const errorList = validationResult(req);
-    if (errorList.errors.length > 0) {
-        console.log("ValidateNewTask errors found: " + errorList.errors.length, errorList.errors);
-        res.status(400);
-        res.json({ error: 'Validation error', data: errorList.errors });
-        return false;
-    }
-    return true;
-}
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Validation of category parameter
 function validateCategory(category, req, res) {
@@ -177,11 +149,8 @@ function validateCategory(category, req, res) {
 }
 
 export {
-    validateNewTask,
+    handleValidationErrors,
     validateCategory,
-    validateAssignTask,
-    validateDoneTask,
-    validateDeleteTask,
     newTaskValidators,
     assignTaskValidators,
     doneTaskValidators,
