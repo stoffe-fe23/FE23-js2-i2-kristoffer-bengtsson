@@ -25,6 +25,13 @@
     outline: 0;
 }
 
+#new-task-form input:focus,
+#new-task-form input:active,
+#new-task-form select:focus,
+#new-task-form select:active {
+    background-color: lightgray;
+}
+
 #new-task-text {
     border-radius: 15px 0px 0px 15px;
     margin: 0;
@@ -41,6 +48,8 @@
     cursor: pointer;
 }
 
+#new-task-submit:active,
+#new-task-submit:focus,
 #new-task-submit:hover {
     background-color: green;
     color: white;

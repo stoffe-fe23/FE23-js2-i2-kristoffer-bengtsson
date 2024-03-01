@@ -1,15 +1,17 @@
+/*
+    RestApi.js
 
+    Class for making requests to a REST API using JSON data. 
+*/
 export default class RestApi {
     #urlBase;
     #urlSuffix;
 
+    // Set the base URL to access the api, and any default suffix (like ".json" on Firebase)
+    // Each request can then extend on the base url, and add query parameters. 
     constructor(baseUrl, urlSuffix = "") {
         this.#urlBase = baseUrl;
         this.#urlSuffix = urlSuffix;
-    }
-
-    get url() {
-        return this.#urlBase;
     }
 
 
@@ -29,6 +31,7 @@ export default class RestApi {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Convert specified object to JSON and submit it to the specified URL using POST method. 
     async postJson(formData, urlPath = '', queryParams = null) {
+        formData = formData ?? {};
         const url = this.#buildRequestUrl(urlPath, queryParams);
         const options = {
             method: "POST",
@@ -47,7 +50,8 @@ export default class RestApi {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Convert specified object to JSON and submit it to the specified URL using POST method. 
-    async updateJson(formData, urlPath = '', queryParams = null) {
+    async updateJson(formData = null, urlPath = '', queryParams = null) {
+        formData = formData ?? {};
         const url = this.#buildRequestUrl(urlPath, queryParams);
         const options = {
             method: "PATCH",
@@ -66,7 +70,8 @@ export default class RestApi {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Remove data from remote source at the specified URL path
-    async deleteJson(formData, urlPath = '', queryParams = null) {
+    async deleteJson(formData = null, urlPath = '', queryParams = null) {
+        formData = formData ?? {};
         const url = this.#buildRequestUrl(urlPath, queryParams);
         const options = {
             method: "DELETE",
@@ -93,7 +98,7 @@ export default class RestApi {
                 let currValue = (!isNaN(value) ? parseInt(value) : value);
                 currValue = (currValue === "true" ? true : (currValue === "false" ? false : currValue));
 
-                // Handle formdata with multiple value fields with the same name attribute (like select tags 
+                // Handle formdata with multiple value fields with the same name attribute (like SELECT tags 
                 //  with the "multiple" attribute, checkbox groups etc)
                 if (!(key in dataObject)) {
                     dataObject[key] = currValue;
@@ -114,7 +119,7 @@ export default class RestApi {
     // Handle error responses from the API
     #handleResponseErrors(response, result) {
         if ((response.status == 400)) {
-            // Request data validation error - build a list of validation errors.
+            // Request data validation error - build a HTML list of the validation errors.
             if (result.error && result.data && (result.error == "Validation error")) {
                 if (Array.isArray(result.data)) {
                     let errorText = "<ul>";
@@ -130,16 +135,16 @@ export default class RestApi {
                     throw new ApiError(response.status, errorText);
                 }
             }
-            // Other type of bad request - show error message from API
+            // Other type of bad request - show the error message from API
             else {
                 throw new ApiError(response.status, `API Error: ${result.error ?? ""}  (${response.statusText})`);
             }
         }
-        // Server errors - show error message from API
+        // Server errors - show the error message from API
         else if (response.status == 500) {
             throw new ApiError(response.status, `API Error: ${result.error ?? ""}  (${response.statusText})`);
         }
-        // Other errors
+        // Other errors - show request status message
         else {
             throw new ApiError(response.status, `API Error: ${response.statusText}`);
         }
@@ -147,7 +152,7 @@ export default class RestApi {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Construct an URL to send requests to.
+    // Assemble URL to send requests to.
     #buildRequestUrl(urlPath = '', queryParams = null) {
         const url = new URL(`${this.#urlBase}${urlPath.length > 0 ? "/" + urlPath : ""}${this.#urlSuffix}`);
         if (queryParams) {

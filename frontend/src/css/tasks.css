@@ -124,6 +124,7 @@
     border: 0;
     border-radius: 15px 0px 0px;
     cursor: pointer;
+    outline: 0;
 }
 
 #tasks-wip-box button:hover,
@@ -145,6 +146,7 @@
     cursor: pointer;
     width: 30px;
     height: 30px;
+    outline: 0;
 
 }
 

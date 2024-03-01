@@ -32,19 +32,59 @@
         "assigned": "John Doe"
     },
     {
-        "taskid": "43a099d6-79e3-4ac9-b641-dd72ccf63424",
-        "time": 1709216936974,
-        "state": "done",
-        "category": "ux",
-        "message": "swip?",
-        "assigned": "fooo"
-    },
-    {
         "taskid": "3708db8e-2de3-40e3-b03c-37991d86ac33",
         "time": 1709217498654,
         "state": "done",
         "category": "backend",
         "message": "Fungerar detta nu måntro?",
         "assigned": "Taskmaster"
+    },
+    {
+        "taskid": "f67a456d-aaa2-4acf-90ff-ce3f22fbdb32",
+        "time": 1709279053839,
+        "state": "done",
+        "category": "backend",
+        "message": "I am so done with this.",
+        "assigned": "Jane Doe"
+    },
+    {
+        "taskid": "09bb92d4-d92c-4038-af7c-8f1d37c5ece0",
+        "time": 1709284092831,
+        "state": "todo",
+        "category": "frontend",
+        "message": "Sorterat ordentligt nu?",
+        "assigned": null
+    },
+    {
+        "taskid": "720f3e43-d193-4cfb-89e1-839c692821c1",
+        "time": 1709286871385,
+        "state": "done",
+        "category": "frontend",
+        "message": "testar ännu mer...",
+        "assigned": "funkar"
+    },
+    {
+        "taskid": "b4dcfc90-7eec-41dd-990f-ae132afeca48",
+        "time": 1709287446253,
+        "state": "todo",
+        "category": "frontend",
+        "message": "testar ännu mer...",
+        "assigned": null
+    },
+    {
+        "taskid": "55abd3e4-4031-4611-911d-41289c797b56",
+        "time": 1709287995618,
+        "state": "wip",
+        "category": "backend",
+        "message": "New task text!",
+        "assigned": "Taskmaster"
+    },
+    {
+        "taskid": "e8847535-fd7b-43d5-9b36-4b91f17c904b",
+        "time": 1709294415393,
+        "state": "wip",
+        "category": "backend",
+        "message": "Extinguish burning fires",
+        "assigned": "First Responder"
     }
 ]
