@@ -28,10 +28,11 @@ export async function saveTasks(taskData) {
 export async function saveNewTask(newTask) {
     if (newTask) {
         const taskData = await loadTasks();
-        if (taskData) {
-            taskData.push(newTask);
-            await saveTasks(taskData);
+        if ((!taskData) || !Array.isArray(taskData)) {
+            taskData = [];
         }
+        taskData.push(newTask);
+        await saveTasks(taskData);
     }
 }
 

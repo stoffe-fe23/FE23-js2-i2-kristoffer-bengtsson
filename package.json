@@ -7,7 +7,7 @@
     "start": "node --watch ./backend/server.js",
     "dev": "parcel serve ./frontend/src/index.html --dist-dir ./frontend/dist",
     "build": "parcel build ./frontend/src/index.html --dist-dir ./frontend/docs --public-url ./",
-    "clean": "del-cli ./.parcel-cache ./frontend/docs ./frontend/dist"
+    "clean": "del-cli ./.parcel-cache ./frontend/docs ./frontend/dist ./backend/server.log"
   },
   "keywords": [],
   "author": "",

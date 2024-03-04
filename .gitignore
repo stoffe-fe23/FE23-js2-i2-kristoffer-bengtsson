@@ -2,3 +2,4 @@
 node_modules
 frontend/dist
 package-lock.json
+backend/server.log

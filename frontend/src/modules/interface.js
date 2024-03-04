@@ -31,9 +31,11 @@ export function createTaskCard(task, onAssignTaskSubmit) {
         case "todo":
             // Assign task form
             const assignForm = Utilities.createHTMLElement('form', '', card, 'task-assign-form');
-            Utilities.createHTMLElement('input', '', assignForm, '', { placeholder: "Assign task to", type: "text", name: "assigned", "min-length": "2", "max-length": "20", required: "true" });
+            Utilities.createHTMLElement('input', '', assignForm, '', { placeholder: "Assign task to", type: "text", name: "assigned", "minlength": "2", "maxlength": "20", required: "true" });
             Utilities.createHTMLElement('button', 'Assign', assignForm);
-            assignForm.addEventListener("submit", onAssignTaskSubmit);
+            if (onAssignTaskSubmit) {
+                assignForm.addEventListener("submit", onAssignTaskSubmit);
+            }
             break;
         case "wip":
             // Done button and display assigned name
