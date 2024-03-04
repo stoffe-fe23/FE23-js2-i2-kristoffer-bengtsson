@@ -1,3 +1,10 @@
+/*
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
+
+    newtaskform.css
+    Stylesheet for the form to create a new task.
+*/
 #new-task-form {
     display: grid;
     grid-template-columns: 4fr 2fr 1fr;

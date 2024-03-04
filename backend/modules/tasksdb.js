@@ -1,6 +1,8 @@
 /*
-    tasksdb.js
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
 
+    tasksdb.js
     Module containing functions for retrieving and saving tasks in the tasks.json file.
 */
 import fs from 'fs/promises';
@@ -24,7 +26,7 @@ export async function saveTasks(taskData) {
 
 
 ///////////////////////////////////////////////////////////////////////////////////
-// Add a new task to the list of tasks and save to the file. 
+// Add a new task and save to the file. 
 export async function saveNewTask(newTask) {
     if (newTask) {
         const taskData = await loadTasks();
@@ -38,7 +40,7 @@ export async function saveNewTask(newTask) {
 
 
 ///////////////////////////////////////////////////////////////////////////////////
-// Update a task with the name of someone it is assigned to, and save task data to the file. 
+// Assign a name to a task, and save task data to the file. 
 export async function assignTask(taskId, assignedTo) {
     if (taskId && assignedTo) {
         const taskData = await loadTasks();

@@ -1,71 +1,10 @@
 /*
-    General utility functions
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
+
+    utilities.js
+    My general utility functions module (trimmed down to only what is used here)
 */
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// Set an event listener on the element(s) matching the targetIdentifier selector, if any exist.
-// Return an array with all matching elements. 
-export function setEventListener(targetSelector, eventType, eventCallback) {
-    const eventTargets = document.querySelectorAll(targetSelector);
-    const targetElements = [];
-    if ((eventTargets !== undefined) && (eventTargets !== null)) {
-        eventTargets.forEach((eventTarget) => {
-            eventTarget.addEventListener(eventType, eventCallback);
-            targetElements.push(eventTarget);
-        });
-    }
-    return targetElements;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////
-// Convert a timestamp number to a displayable date string using the formatting of the
-// specified language locale (e.g. 'sv-SE', 'en-US' etc), or the browser language 
-// if none is specified. 
-export function timestampToDateTime(timestamp, isMilliSeconds = true, locale = null) {
-    const dateObj = new Date(isMilliSeconds ? timestamp : timestamp * 1000);
-    const formatLocale = (locale ?? navigator.language);
-    const formatOptions = {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric"
-    };
-
-    return new Intl.DateTimeFormat(formatLocale, formatOptions).format(dateObj);
-    // return `${dateObj.toLocaleDateString(formatLocale)} ${dateObj.toLocaleTimeString(formatLocale)}`;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////
-// Utility to determine if a text variable has been set and assigned a value.
-export function getIsValidText(text, lengthLimit = 1) {
-    return ((text !== undefined) && (text !== null) && (text.length !== undefined) && (text.length >= lengthLimit));
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// Kontrollera om angiven parameter är ett giltigt nummer
-export function getIsValidNumber(number) {
-    return (number !== undefined) && (number !== null) && !isNaN(number);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////
-// Utility to determine if a variable is an array with content
-export function getIsValidArray(arr, lengthLimit = 1) {
-    return ((arr !== undefined) && (arr !== null) && (Array.isArray(arr)) && (arr.length !== undefined) && (arr.length >= lengthLimit));
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////
-//  Utility to determine if a variable is an object with properties set
-export function getIsValidObject(obj, requiredProperties = 1) {
-    return ((obj !== undefined) && (obj !== null) && (typeof obj == "object") && (Object.keys(obj).length >= requiredProperties));
-}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,24 +14,20 @@ export function getIsValidObject(obj, requiredProperties = 1) {
 //    can also be formated like: SELECT: value|textlabel|optgroup      DATALIST: value|textlabel
 //  * elementClass can be a string or an array of strings holding CSS class(es) to apply to the element. 
 //  * The elementAttributes parameter can be an object with a property for each attribute to set on the HTML element. 
-// Function returns the newly created DOM element (or wrapper element if a wrapper is created).
+// Function returns the newly created DOM element (or its wrapper element if a wrapper is created).
 // Remember: Set CSS "white-space: pre-wrap;" on element if allowHTML is true and newlines still should displayed like with innerText. 
 export function createHTMLElement(elementType, elementText, parentElement = null, elementClass = '', elementAttributes = null, allowHTML = false) {
     let newElement = document.createElement(elementType);
 
     elementType = elementType.toLowerCase();
 
-    // Set any attributes on the element
     if (getIsValidObject(elementAttributes, 1)) {
         for (const attributeName in elementAttributes) {
             newElement.setAttribute(attributeName, elementAttributes[attributeName]);
         }
     }
-
-    // Set CSS class(es) on the element
     addClassToElement(newElement, elementClass);
 
-    // If text content is an array, check if the type is a list or select tag
     if (getIsValidArray(elementText)) {
         // If type is a list and text is an array, build list items
         if ((elementType == 'ul') || (elementType == 'ol')) {
@@ -125,17 +60,16 @@ export function createHTMLElement(elementType, elementText, parentElement = null
                 }
             }
         }
-        // Not a list-type element, just use the first string 
+        // Array but not a list-type element, just use the first string 
         else {
             setElementContent(newElement, elementText[0], allowHTML);
         }
     }
     else if (getIsValidText(elementText, 1)) {
-        // Special case for images - set ALT attribute
         if (elementType == 'img') {
             newElement.alt = elementText;
         }
-        // Special case for input fields, create labels
+        // Special case for input fields, create wrapper and labels for them.
         else if ((elementType == 'input') && (elementText.length > 0)) {
             const actualNewElement = newElement;
             const newElementLabel = document.createElement("label");
@@ -157,13 +91,11 @@ export function createHTMLElement(elementType, elementText, parentElement = null
             }
 
         }
-        // Everything else, set the text content
         else {
             setElementContent(newElement, elementText, allowHTML);
         }
     }
 
-    // Append to parent, if set
     if ((parentElement !== undefined) && (parentElement !== null)) {
         parentElement.appendChild(newElement);
     }
@@ -199,63 +131,23 @@ export function addClassToElement(targetElement, classesToAdd) {
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// Set content of the matching HTML element if it exists, otherwise create it. 
-export function setHTMLElement(elementType, elementText, parentElement, cssClass, attributes, allowHTML) {
-    let selector = '';
-    if ((getIsValidObject(attributes) && getIsValidText(attributes.id))) {
-        selector = `#${attributes.id}`;
-    }
-    else if (getIsValidArray(cssClass)) {
-        selector = `${elementType}.${cssClass.join(".")}`;
-    }
-    else if (getIsValidText(cssClass)) {
-        selector = `${elementType}.${cssClass}`;
-    }
-    else {
-        selector = elementType;
-    }
-
-    let targetElement = parentElement.querySelector(selector);
-    if (getIsValidObject(targetElement, 0)) {
-        if ((elementType == 'ul') || (elementType == 'ol')) {
-            targetElement.innerHTML = '';
-            for (const listItemText of elementText) {
-                const newListItem = document.createElement("li");
-                setElementContent(newListItem, listItemText, allowHTML);
-                targetElement.appendChild(newListItem);
-            }
-        }
-        else if ((elementType == 'select') || (elementType == 'datalist')) {
-            targetElement.innerHTML = '';
-            for (const optionItemText of elementText) {
-                const [optValue, optLabel, optGroup] = optionItemText.split('|');
-                const newOptionItem = document.createElement("option");
-
-                setElementContent(newOptionItem, (optLabel ?? optValue), allowHTML);
-                newOptionItem.value = optValue;
-
-                if (optGroup !== undefined) {
-                    let optionGroup = targetElement.querySelector(`optgroup[label="${optGroup}"]`);
-                    if ((optionGroup === undefined) || (optionGroup === null)) {
-                        optionGroup = document.createElement("optgroup");
-                        optionGroup.label = optGroup;
-                        targetElement.appendChild(optionGroup);
-                    }
-                    optionGroup.appendChild(newOptionItem);
-                }
-                else {
-                    targetElement.appendChild(newOptionItem);
-                }
-            }
-        }
-        else {
-            setElementContent(targetElement, elementText, allowHTML);
-        }
-    }
-    else {
-        targetElement = createHTMLElement(elementType, elementText, parentElement, cssClass, attributes, allowHTML);
-    }
-
-    return targetElement;
+///////////////////////////////////////////////////////////////////////////////////////////
+// Utility to determine if a text variable has been set and assigned a value.
+export function getIsValidText(text, lengthLimit = 1) {
+    return ((text !== undefined) && (text !== null) && (text.length !== undefined) && (text.length >= lengthLimit));
 }
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+// Utility to determine if a variable is an array with content
+export function getIsValidArray(arr, lengthLimit = 1) {
+    return ((arr !== undefined) && (arr !== null) && (Array.isArray(arr)) && (arr.length !== undefined) && (arr.length >= lengthLimit));
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+//  Utility to determine if a variable is an object with properties set
+export function getIsValidObject(obj, requiredProperties = 1) {
+    return ((obj !== undefined) && (obj !== null) && (typeof obj == "object") && (Object.keys(obj).length >= requiredProperties));
+}
+

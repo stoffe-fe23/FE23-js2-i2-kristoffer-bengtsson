@@ -18,10 +18,10 @@
     {
         "taskid": "5d2dac6c-5132-4234-9389-d08934d77a31",
         "time": 1709212748377,
-        "state": "todo",
+        "state": "done",
         "category": "ux",
         "message": "Gör så det ser lite mindre för jävligt ut...",
-        "assigned": null
+        "assigned": "Fixarfrasse"
     },
     {
         "taskid": "f9258ea6-89c5-46b6-8577-9df9c343dc96",
@@ -56,22 +56,6 @@
         "assigned": null
     },
     {
-        "taskid": "720f3e43-d193-4cfb-89e1-839c692821c1",
-        "time": 1709286871385,
-        "state": "done",
-        "category": "frontend",
-        "message": "testar ännu mer...",
-        "assigned": "funkar"
-    },
-    {
-        "taskid": "b4dcfc90-7eec-41dd-990f-ae132afeca48",
-        "time": 1709287446253,
-        "state": "todo",
-        "category": "frontend",
-        "message": "testar ännu mer...",
-        "assigned": null
-    },
-    {
         "taskid": "55abd3e4-4031-4611-911d-41289c797b56",
         "time": 1709287995618,
         "state": "wip",
@@ -86,5 +70,21 @@
         "category": "backend",
         "message": "Extinguish burning fires",
         "assigned": "First Responder"
+    },
+    {
+        "taskid": "f306c593-32f4-4803-8d4a-0729093cbf1f",
+        "time": 1709551479848,
+        "state": "todo",
+        "category": "ux",
+        "message": "Visa felmeddelande ordentligt.",
+        "assigned": null
+    },
+    {
+        "taskid": "af24dae0-1297-4c10-a6ad-f8d1671b92f2",
+        "time": 1709551547672,
+        "state": "todo",
+        "category": "frontend",
+        "message": "Testa så det fungerar i Eldräven med.",
+        "assigned": null
     }
 ]

@@ -1,6 +1,8 @@
 /*
-    endpoints.js
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
 
+    endpoints.js
     Module with router request handlers for the /tasks API endpoint.
 */
 import { loadTasks, saveNewTask, assignTask, setTaskDone, deleteTask } from "./tasksdb.js";
@@ -53,7 +55,7 @@ tasksRouter.post("/add", newTaskValidators, handleValidationErrors, (req, res) =
 
 
 ///////////////////////////////////////////////////////////////////////////////////
-// Assign a task to someone
+// Assign a name to a task
 tasksRouter.patch("/assign", assignTaskValidators, handleValidationErrors, (req, res) => {
     assignTask(req.body.taskid, req.body.assigned).then(() => {
         res.json(req.body);
@@ -79,7 +81,7 @@ tasksRouter.patch("/done/:taskid", doneTaskValidators, handleValidationErrors, (
 
 
 ///////////////////////////////////////////////////////////////////////////////////
-// Remove a task from the board
+// Remove a task
 tasksRouter.delete("/delete/:taskid", deleteTaskValidators, handleValidationErrors, (req, res) => {
     deleteTask(req.params.taskid).then(() => {
         res.json({ taskid: req.params.taskid, state: "deleted" });

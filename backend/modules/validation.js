@@ -1,6 +1,8 @@
 /*
-    validation.js
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
 
+    validation.js
     Module with validation chain arrays and functions for validation of request data. 
 */
 import { body, param, validationResult } from "express-validator";

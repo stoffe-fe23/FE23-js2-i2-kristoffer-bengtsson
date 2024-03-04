@@ -1,12 +1,37 @@
 /*
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
+
     main.js
-
-    Main script of the frontend page. Handlers for user input. 
+    Main script of the frontend page. Event handlers for user input. 
 */
-import { showTasks, addNewTask, setTaskDone, deleteTask } from './modules/tasks.js';
+import TaskManager from './modules/TaskManager.js';
 
-// Display all tasks when the page loads. 
-showTasks();
+
+const taskManager = new TaskManager('http://localhost:3000/tasks');
+// const taskManager = new TaskManager('http://192.168.1.3:3000/tasks');
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+// Event handler: Assign someone to a task
+taskManager.setOnAssignTaskEvent((event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    formData.set('taskid', event.submitter.closest("article").getAttribute("taskid"));
+
+    taskManager.assignTask(formData);
+    event.currentTarget.reset();
+});
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Event handler: add a new task
+document.querySelector("#new-task-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget, event.submitter);
+    taskManager.addNewTask(formData);
+    event.currentTarget.reset();
+});
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -16,7 +41,7 @@ document.querySelector("#tasks-wip-box").addEventListener("submit", (event) => {
 
     const taskId = event.submitter.closest("article").getAttribute("taskid");
     if (taskId) {
-        setTaskDone(taskId);
+        taskManager.setTaskDone(taskId);
     }
     else {
         console.error("Error marking task as done: Task ID not found!");
@@ -32,7 +57,7 @@ document.querySelector("#tasks-done-box").addEventListener("submit", (event) => 
     const taskId = event.submitter.closest("article").getAttribute("taskid");
     if (taskId) {
         if (confirm("Are you sure you wish to delete this task?")) {
-            deleteTask(taskId);
+            taskManager.deleteTask(taskId);
         }
     }
     else {
@@ -41,12 +66,5 @@ document.querySelector("#tasks-done-box").addEventListener("submit", (event) => 
 });
 
 
-///////////////////////////////////////////////////////////////////////////////
-// Event handler: add a new task
-document.querySelector("#new-task-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget, event.submitter);
-    addNewTask(formData);
-    event.currentTarget.reset();
-});
-
+// Display all tasks when the page loads. 
+taskManager.showTasks();

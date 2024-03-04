@@ -1,6 +1,8 @@
 /*
-    RestApi.js
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
 
+    RestApi.js
     Class for making requests to a REST API using JSON data. 
 */
 export default class RestApi {
@@ -8,7 +10,7 @@ export default class RestApi {
     #urlSuffix;
 
     // Set the base URL to access the api, and any default suffix (like ".json" on Firebase)
-    // Each request can then extend on the base url, and add query parameters. 
+    // Each individual request method can then extend on the base url, and add query parameters. 
     constructor(baseUrl, urlSuffix = "") {
         this.#urlBase = baseUrl;
         this.#urlSuffix = urlSuffix;
@@ -16,7 +18,7 @@ export default class RestApi {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Fetch data from remote source URL path in JSON format
+    // Send GET request to API
     async getJson(urlPath = '', queryParams = null) {
         const url = this.#buildRequestUrl(urlPath, queryParams);
         const response = await fetch(url);
@@ -29,15 +31,10 @@ export default class RestApi {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Convert specified object to JSON and submit it to the specified URL using POST method. 
+    // Send POST request to API
     async postJson(formData, urlPath = '', queryParams = null) {
-        formData = formData ?? {};
         const url = this.#buildRequestUrl(urlPath, queryParams);
-        const options = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: (formData instanceof FormData ? this.formdataToJson(formData) : JSON.stringify(formData)),
-        };
+        const options = this.#getFetchOptions("POST", formData ?? {});
 
         let response = await fetch(url, options);
         let result = await response.json();
@@ -49,15 +46,10 @@ export default class RestApi {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Convert specified object to JSON and submit it to the specified URL using POST method. 
+    // Send PATCH request to API
     async updateJson(formData = null, urlPath = '', queryParams = null) {
-        formData = formData ?? {};
         const url = this.#buildRequestUrl(urlPath, queryParams);
-        const options = {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: (formData instanceof FormData ? this.formdataToJson(formData) : JSON.stringify(formData)),
-        };
+        const options = this.#getFetchOptions("PATCH", formData ?? {});
 
         let response = await fetch(url, options);
         let result = await response.json();
@@ -69,15 +61,10 @@ export default class RestApi {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Remove data from remote source at the specified URL path
+    // Send DELETE request to API
     async deleteJson(formData = null, urlPath = '', queryParams = null) {
-        formData = formData ?? {};
         const url = this.#buildRequestUrl(urlPath, queryParams);
-        const options = {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-            body: (formData instanceof FormData ? this.formdataToJson(formData) : JSON.stringify(formData)),
-        };
+        const options = this.#getFetchOptions("DELETE", formData ?? {});
 
         let response = await fetch(url, options);
         let result = await response.json();
@@ -89,7 +76,7 @@ export default class RestApi {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Return a json-encoded object from a FormData object
+    // Create a json-encoded object from a FormData object
     formdataToJson(formData) {
         var dataObject = {};
         if (formData instanceof FormData) {
@@ -116,7 +103,7 @@ export default class RestApi {
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
-    // Handle error responses from the API
+    // Handle error responses from the API requests
     #handleResponseErrors(response, result) {
         if ((response.status == 400)) {
             // Request data validation error - build a HTML list of the validation errors.
@@ -154,13 +141,23 @@ export default class RestApi {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Assemble URL to send requests to.
     #buildRequestUrl(urlPath = '', queryParams = null) {
-        const url = new URL(`${this.#urlBase}${urlPath.length > 0 ? "/" + urlPath : ""}${this.#urlSuffix}`);
+        const url = new URL(`${this.#urlBase}${urlPath.length ? "/" + urlPath : ""}${this.#urlSuffix}`);
         if (queryParams) {
             for (const key in queryParams) {
                 url.searchParams.append(key, queryParams[key]);
             }
         }
         return url;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Build options object for fetch() for submitting JSON data.
+    #getFetchOptions(reqMethod, formData) {
+        return {
+            method: reqMethod,
+            headers: { "Content-Type": "application/json" },
+            body: (formData instanceof FormData ? this.formdataToJson(formData) : JSON.stringify(formData)),
+        };
     }
 }
 

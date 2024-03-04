@@ -1,6 +1,8 @@
 /*
-    serverlog.js
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
 
+    serverlog.js
     Module with functions for logging requests and errors to the serverlog.txt file. 
 */
 import fs from 'fs';

@@ -1,3 +1,11 @@
+/*
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
+
+    tasks.css
+    Stylesheet for displaying tasks on the page.
+*/
+
 #board {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;

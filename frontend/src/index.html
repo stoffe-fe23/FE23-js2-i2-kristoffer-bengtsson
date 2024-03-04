@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+    <!--
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/newtaskform.css">
-    <link rel="stylesheet" href="./css/tasks.css">
-    <script src="./main.js" type="module"></script>
-    <title>Scrumm Bar - Inlämningsuppgift 2</title>
-</head>
-
-<body>
-    <header>
-        <form id="new-task-form">
-            <input type="text" name="message" id="new-task-text" minlength="2" maxlength="1000" placeholder="New task text" required>
-            <select name="category" id="new-task-type" required>
-                <option value="">-- Choose category --</option>
-                <option value="frontend">Frontend development</option>
-                <option value="backend">Backend development</option>
-                <option value="ux">User Experience design</option>
-            </select>
-            <button id="new-task-submit">Add task</button>
-        </form>
-        <div id="type-legend">
-            <div class="color-frontend">FrontEnd</div>
-            <div class="color-backend">BackEnd</div>
-            <div class="color-ux">UX</div>
-        </div>
-    </header>
-    <main>
-        <div id="board">
-            <section id="tasks-todo">
-                <h2>To do</h2>
-                <div id="tasks-todo-box"></div>
-            </section>
-            <section id="tasks-wip">
-                <h2>In progress</h2>
-                <form id="tasks-wip-box"></form>
-            </section>
-            <section id="tasks-done">
-                <h2>Done</h2>
-                <form id="tasks-done-box"></form>
-            </section>
-        </div>
-    </main>
-    <dialog id="errors"></dialog>
-</body>
-
+    index.html
+    Main html file for the frontend client page. 
+-->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="./css/newtaskform.css">
+        <link rel="stylesheet" href="./css/tasks.css">
+        <script src="./main.js" type="module"></script>
+        <title>Scrum Board - Inlämningsuppgift 2</title>
+    </head>
+    <body>
+        <header>
+            <form id="new-task-form">
+                <input type="text" name="message" id="new-task-text" minlength="2" maxlength="1000" placeholder="New task text" required>
+                <select name="category" id="new-task-type" required>
+                    <option value="">-- Choose category --</option>
+                    <option value="frontend">Frontend development</option>
+                    <option value="backend">Backend development</option>
+                    <option value="ux">User Experience design</option>
+                </select>
+                <button id="new-task-submit">Add task</button>
+            </form>
+            <div id="type-legend">
+                <div class="color-frontend">FrontEnd</div>
+                <div class="color-backend">BackEnd</div>
+                <div class="color-ux">UX</div>
+            </div>
+        </header>
+        <main>
+            <div id="board">
+                <section id="tasks-todo">
+                    <h2>To do</h2>
+                    <div id="tasks-todo-box"></div>
+                </section>
+                <section id="tasks-wip">
+                    <h2>In progress</h2>
+                    <form id="tasks-wip-box"></form>
+                </section>
+                <section id="tasks-done">
+                    <h2>Done</h2>
+                    <form id="tasks-done-box"></form>
+                </section>
+            </div>
+        </main>
+        <dialog id="errors"></dialog>
+    </body>
 </html>

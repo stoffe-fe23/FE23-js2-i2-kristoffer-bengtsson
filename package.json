@@ -1,7 +1,7 @@
 {
-  "name": "exercise10",
+  "name": "fe23-js2-i2-kristoffer-bengtsson",
   "version": "1.0.0",
-  "description": "",
+  "description": "Inlämningsuppgift 2 - Scrum Board",
   "type": "module",
   "scripts": {
     "start": "node --watch ./backend/server.js",

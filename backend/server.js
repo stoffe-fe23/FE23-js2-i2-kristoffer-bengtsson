@@ -1,7 +1,9 @@
 /*
-    server.js
+    Scrum Board - Inlämningsuppgift 2 - Javascript 2 - FE23
+    By Kristoffer Bengtsson
 
-    Main express/node.js server script.
+    server.js
+    Main Express/Node.js server script.
 */
 import express from "express";
 import cors from "cors";
@@ -15,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Log requests to the server.log file
+// Log requests to the serverlog.txt file
 app.use(logRequestToFile);
 
 // Serve the frontend client files in the docs folder at the root path: http://localhost:3000/
