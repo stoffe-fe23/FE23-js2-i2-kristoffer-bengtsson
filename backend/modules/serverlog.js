@@ -1,14 +1,14 @@
 /*
     serverlog.js
 
-    Module with functions for logging requests and errors to the server.log file. 
+    Module with functions for logging requests and errors to the serverlog.txt file. 
 */
 import fs from 'fs';
 
-const logWriter = fs.createWriteStream('./backend/server.log', { flags: 'a' });
+const logWriter = fs.createWriteStream('./backend/serverlog.txt', { flags: 'a' });
 
 ///////////////////////////////////////////////////////////////////////////////
-// Middleware function logging incoming client requests to the server.log file
+// Middleware function logging incoming client requests to the serverlog.txt file
 export async function logRequestToFile(req, res, next) {
     await logToFile(req.method, req.path);
     next();
@@ -23,7 +23,7 @@ export async function logErrorToFile(req, error) {
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Write a time-stamped line to the server.log file.
+// Write a time-stamped line to the serverlog.txt file.
 async function logToFile(method, path, message = '') {
     const requestTime = timestampToDateTime(Date.now());
     logWriter.write(`${requestTime}\t${method.padEnd(8, " ")}\t${path}\t${message}\n`);
