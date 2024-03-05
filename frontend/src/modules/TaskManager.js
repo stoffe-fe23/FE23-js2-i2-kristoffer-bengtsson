@@ -20,22 +20,18 @@ export default class TaskManager {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Remove a task
     deleteTask(taskId) {
-        this.api.deleteJson(null, `delete/${taskId}`).then(() => {
-            this.showTasks();
-        }).catch((error) => {
-            showError(error.message);
-        });
+        this.api.deleteJson(`delete/${taskId}`)
+            .then(this.showTasks.bind(this))
+            .catch(showError);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Move a task to the Done column
     setTaskDone(taskId) {
-        this.api.updateJson(null, `done/${taskId}`).then(() => {
-            this.showTasks();
-        }).catch((error) => {
-            showError(error.message);
-        });
+        this.api.updateJson(`done/${taskId}`)
+            .then(this.showTasks.bind(this))
+            .catch(showError);
     }
 
 
@@ -43,11 +39,9 @@ export default class TaskManager {
     // Move task to In Progress column and assign a name
     // FormData must contain two keys: taskid, assigned
     assignTask(taskFormData) {
-        this.api.updateJson(taskFormData, 'assign').then(() => {
-            this.showTasks();
-        }).catch((error) => {
-            showError(error.message);
-        });
+        this.api.updateJson('assign', taskFormData)
+            .then(this.showTasks.bind(this))
+            .catch(showError);
     }
 
 
@@ -55,16 +49,14 @@ export default class TaskManager {
     // Add a new task to the ToDo column
     // FormData must contain two keys: message, category
     addNewTask(taskFormData) {
-        this.api.postJson(taskFormData, 'add').then(() => {
-            this.showTasks();
-        }).catch((error) => {
-            showError(error.message);
-        });
+        this.api.postJson('add', taskFormData)
+            .then(this.showTasks.bind(this))
+            .catch(showError);
     }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    // Display all tasks on the page
+    // Display all tasks on the page, sorted by newest first.
     showTasks() {
         this.api.getJson('list').then((taskData) => {
             const columns = {
@@ -76,16 +68,12 @@ export default class TaskManager {
             Object.values(columns).forEach((column) => { column.innerHTML = "" });
 
             if (taskData.length) {
-                // Sort tasks by newest first
                 taskData.sort((a, b) => b.time - a.time);
-
                 for (const task of taskData) {
                     columns[task.state].appendChild(createTaskCard(task, this.#onAssignTask));
                 }
             }
-        }).catch((error) => {
-            showError(error.message);
-        });
+        }).catch(showError);
     }
 
 

@@ -90,6 +90,8 @@ export async function deleteTask(taskId) {
 
 ///////////////////////////////////////////////////////////////////////////////////
 // Check if a task with the specified ID and state exists in the file. 
+// Returns "not found" if the taskid does not exist, "wrong state" if it does
+// exist but the state does not match, or "ok" if there is a match. 
 export async function taskExistsWithState(taskId, requiredState = null) {
     const taskData = await loadTasks();
     if (!taskData || !Array.isArray(taskData)) {

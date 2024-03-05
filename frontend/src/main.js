@@ -18,9 +18,7 @@ taskManager.setOnAssignTaskEvent((event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     formData.set('taskid', event.submitter.closest("article").getAttribute("taskid"));
-
     taskManager.assignTask(formData);
-    event.currentTarget.reset();
 });
 
 
@@ -38,7 +36,6 @@ document.querySelector("#new-task-form").addEventListener("submit", (event) => {
 // Event handler: Done button on In Progress tasks
 document.querySelector("#tasks-wip-box").addEventListener("submit", (event) => {
     event.preventDefault();
-
     const taskId = event.submitter.closest("article").getAttribute("taskid");
     if (taskId) {
         taskManager.setTaskDone(taskId);
@@ -53,7 +50,6 @@ document.querySelector("#tasks-wip-box").addEventListener("submit", (event) => {
 // Event handler: Delete button on Done tasks
 document.querySelector("#tasks-done-box").addEventListener("submit", (event) => {
     event.preventDefault();
-
     const taskId = event.submitter.closest("article").getAttribute("taskid");
     if (taskId) {
         if (confirm("Are you sure you wish to delete this task?")) {

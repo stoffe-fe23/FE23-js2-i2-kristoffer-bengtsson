@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="./css/tasks.css">
         <script src="./main.js" type="module"></script>
         <title>Scrum Board - Inlämningsuppgift 2</title>
+        <link rel="icon" type="image/png" href="favicon.png" />
     </head>
     <body>
         <header>
@@ -34,21 +35,19 @@
                 <div class="color-ux">UX</div>
             </div>
         </header>
-        <main>
-            <div id="board">
-                <section id="tasks-todo">
-                    <h2>To do</h2>
-                    <div id="tasks-todo-box"></div>
-                </section>
-                <section id="tasks-wip">
-                    <h2>In progress</h2>
-                    <form id="tasks-wip-box"></form>
-                </section>
-                <section id="tasks-done">
-                    <h2>Done</h2>
-                    <form id="tasks-done-box"></form>
-                </section>
-            </div>
+        <main id="board">
+            <section id="tasks-todo">
+                <h2>To do</h2>
+                <div id="tasks-todo-box"></div>
+            </section>
+            <section id="tasks-wip">
+                <h2>In progress</h2>
+                <form id="tasks-wip-box"></form>
+            </section>
+            <section id="tasks-done">
+                <h2>Done</h2>
+                <form id="tasks-done-box"></form>
+            </section>
         </main>
         <dialog id="errors"></dialog>
     </body>

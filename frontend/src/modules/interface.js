@@ -10,16 +10,18 @@ import * as Utilities from './utilities.js';
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Show error messages in a popup dialog box
-export function showError(message) {
+export function showError({ message }) {
     const errorBox = document.querySelector("#errors");
     errorBox.innerHTML = "";
 
-    Utilities.createHTMLElement('h2', 'Error', errorBox);
-    Utilities.createHTMLElement('div', message, errorBox, 'error-box-message', null, true);
-    Utilities.createHTMLElement('button', 'OK', errorBox, 'error-close-button').addEventListener("click", (event) => {
+    const errorWrapper = Utilities.createHTMLElement('div', '', errorBox, 'error-message');
+    Utilities.createHTMLElement('h2', 'Error', errorWrapper);
+    Utilities.createHTMLElement('div', message, errorWrapper, 'error-box-message', null, true);
+    Utilities.createHTMLElement('button', 'OK', errorWrapper, 'error-close-button').addEventListener("click", (event) => {
         event.currentTarget.closest('dialog').close();
     });
 
+    console.error(message);
     errorBox.showModal();
 }
 

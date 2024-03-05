@@ -8,22 +8,6 @@
         "assigned": "Tess Testare"
     },
     {
-        "taskid": "ad690dbb-9397-452f-82f5-d22e2757380b",
-        "time": 1709212730781,
-        "state": "wip",
-        "category": "backend",
-        "message": "Hitta varför det strular",
-        "assigned": "Jane Doe"
-    },
-    {
-        "taskid": "5d2dac6c-5132-4234-9389-d08934d77a31",
-        "time": 1709212748377,
-        "state": "done",
-        "category": "ux",
-        "message": "Gör så det ser lite mindre för jävligt ut...",
-        "assigned": "Fixarfrasse"
-    },
-    {
         "taskid": "f9258ea6-89c5-46b6-8577-9df9c343dc96",
         "time": 1709212788038,
         "state": "done",
@@ -56,14 +40,6 @@
         "assigned": null
     },
     {
-        "taskid": "55abd3e4-4031-4611-911d-41289c797b56",
-        "time": 1709287995618,
-        "state": "wip",
-        "category": "backend",
-        "message": "New task text!",
-        "assigned": "Taskmaster"
-    },
-    {
         "taskid": "e8847535-fd7b-43d5-9b36-4b91f17c904b",
         "time": 1709294415393,
         "state": "wip",
@@ -86,5 +62,21 @@
         "category": "frontend",
         "message": "Testa så det fungerar i Eldräven med.",
         "assigned": null
+    },
+    {
+        "taskid": "5bcca996-929a-4451-a889-3a2267c6e216",
+        "time": 1709622462836,
+        "state": "done",
+        "category": "ux",
+        "message": "Fixa så det ser lite mindre bedrövligt ut.",
+        "assigned": "Fixarfrasse"
+    },
+    {
+        "taskid": "63dc4d4b-dd71-40d1-8cfe-c22328a8b69b",
+        "time": 1709622733705,
+        "state": "wip",
+        "category": "ux",
+        "message": "Ett riktigt långt \"task\"-meddelande här. Lorem, ipsum dolor sit amet consectetur adipisicing elit.  Recusandae repellendus est autem nobis dolore velit ipsa eligendi, cumque excepturi, ad ab provident consequuntur modi odit maiores tenetur quas reprehenderit a perspiciatis iste quis quo reiciendis pariatur error?  Itaque eum sapiente dolorem ducimus, perferendis velit quia repellat sunt minima voluptates a harum non sed molestiae incidunt aspernatur ullam error ipsa eos quam quaerat iure ut placeat quasi? Consequatur quidem nulla excepturi culpa optio. Deleniti consequatur dolores repellendus possimus ducimus corrupti, harum cupiditate eos dicta earum. Atque asperiores nobis ea illum itaque voluptatibus architecto amet odit recusandae fuga sit ipsum eum harum sunt, beatae accusamus laboriosam quis consectetur placeat veritatis perspiciatis aliquam ipsam. Aspernatur est eligendi facilis quaerat, earum rerum repellat doloremque illum placeat et hic minus inventore porro voluptas deserunt",
+        "assigned": "Lorem Ipsum"
     }
 ]

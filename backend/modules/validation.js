@@ -18,7 +18,6 @@ const validCategories = ['frontend', 'backend', 'ux'];
 function handleValidationErrors(req, res, next) {
     const errorList = validationResult(req);
     if (errorList.errors.length > 0) {
-        // console.log("Validation errors found: " + errorList.errors.length, errorList.errors);
         logErrorToFile(req, `Request data validation errors (${errorList.errors.length})`);
         res.status(400);
         res.json({ error: 'Validation error', data: errorList.errors });

@@ -57,3 +57,44 @@ option[value="ux"] {
     border-radius: 50%;
     font-size: 0.7em;
 }
+
+#errors {
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+    border: 5px solid red;
+    background-color: darkred;
+    color: white;
+}
+
+#errors::backdrop {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.error-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#errors h2 {
+    margin: 0px 0px 1rem 0px;
+}
+
+#errors ul {
+    padding: 0.2rem 1rem 0.2rem 1.5rem;
+}
+
+#errors button {
+    margin-top: 1.5rem;
+    background-color: black;
+    color: white;
+    border: 0px;
+    padding: 0.5rem 1.2rem;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#errors button:hover,
+#errors button:focus,
+#errors button:active {
+    background-color: darkblue;
+}

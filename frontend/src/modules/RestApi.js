@@ -20,8 +20,7 @@ export default class RestApi {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Send GET request to API
     async getJson(urlPath = '', queryParams = null) {
-        const url = this.#buildRequestUrl(urlPath, queryParams);
-        const response = await fetch(url);
+        const response = await fetch(this.#buildRequestUrl(urlPath, queryParams));
         let result = await response.json();
         if (!response.ok) {
             this.#handleResponseErrors(response, result);
@@ -32,11 +31,8 @@ export default class RestApi {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Send POST request to API
-    async postJson(formData, urlPath = '', queryParams = null) {
-        const url = this.#buildRequestUrl(urlPath, queryParams);
-        const options = this.#getFetchOptions("POST", formData ?? {});
-
-        let response = await fetch(url, options);
+    async postJson(urlPath = '', formData = null, queryParams = null) {
+        let response = await fetch(this.#buildRequestUrl(urlPath, queryParams), this.#getFetchOptions("POST", formData ?? {}));
         let result = await response.json();
         if (!response.ok) {
             this.#handleResponseErrors(response, result);
@@ -47,11 +43,8 @@ export default class RestApi {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Send PATCH request to API
-    async updateJson(formData = null, urlPath = '', queryParams = null) {
-        const url = this.#buildRequestUrl(urlPath, queryParams);
-        const options = this.#getFetchOptions("PATCH", formData ?? {});
-
-        let response = await fetch(url, options);
+    async updateJson(urlPath = '', formData = null, queryParams = null) {
+        let response = await fetch(this.#buildRequestUrl(urlPath, queryParams), this.#getFetchOptions("PATCH", formData ?? {}));
         let result = await response.json();
         if (!response.ok) {
             this.#handleResponseErrors(response, result);
@@ -62,11 +55,8 @@ export default class RestApi {
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Send DELETE request to API
-    async deleteJson(formData = null, urlPath = '', queryParams = null) {
-        const url = this.#buildRequestUrl(urlPath, queryParams);
-        const options = this.#getFetchOptions("DELETE", formData ?? {});
-
-        let response = await fetch(url, options);
+    async deleteJson(urlPath = '', formData = null, queryParams = null) {
+        let response = await fetch(this.#buildRequestUrl(urlPath, queryParams), this.#getFetchOptions("DELETE", formData ?? {}));
         let result = await response.json();
         if (!response.ok) {
             this.#handleResponseErrors(response, result);
@@ -81,7 +71,7 @@ export default class RestApi {
         var dataObject = {};
         if (formData instanceof FormData) {
             formData.forEach((value, key) => {
-                // In case the remote api is type sensitive (like Firebase), convert numbers and booleans from FormData strings 
+                // In case the remote api is type sensitive (like Firebase), convert to numbers and booleans from FormData strings 
                 let currValue = (!isNaN(value) ? parseInt(value) : value);
                 currValue = (currValue === "true" ? true : (currValue === "false" ? false : currValue));
 
@@ -106,7 +96,7 @@ export default class RestApi {
     // Handle error responses from the API requests
     #handleResponseErrors(response, result) {
         if ((response.status == 400)) {
-            // Request data validation error - build a HTML list of the validation errors.
+            // Validation errors - build a HTML list of validation errors.
             if (result.error && result.data && (result.error == "Validation error")) {
                 if (Array.isArray(result.data)) {
                     let errorText = "<ul>";
