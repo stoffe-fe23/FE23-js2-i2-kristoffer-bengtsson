@@ -10,6 +10,7 @@ import { showError, createTaskCard } from './interface.js';
 
 
 export default class TaskManager {
+    static validStates = ['todo', 'wip', 'done'];
     api;
     #onAssignTask;
 
@@ -59,12 +60,8 @@ export default class TaskManager {
     // Display all tasks on the page, sorted by newest first.
     showTasks() {
         this.api.getJson('list').then((taskData) => {
-            const columns = {
-                todo: document.querySelector("#tasks-todo-box"),
-                wip: document.querySelector("#tasks-wip-box"),
-                done: document.querySelector("#tasks-done-box")
-            }
-
+            const columns = {};
+            TaskManager.validStates.forEach((state) => columns[state] = document.querySelector(`#tasks-${state}-box`));
             Object.values(columns).forEach((column) => { column.innerHTML = "" });
 
             if (taskData.length) {
