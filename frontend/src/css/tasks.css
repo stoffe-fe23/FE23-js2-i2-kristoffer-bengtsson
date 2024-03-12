@@ -31,7 +31,7 @@
 #board > section > div {
     display: flex;
     gap: 0.4rem;
-    flex-direction: column;
+    flex-direction: column-reverse;
     padding: 0.5rem;
 }
 
@@ -73,6 +73,12 @@
 
 .assigned-to::before {
     content: " ► ";
+}
+
+.created-time {
+    font-size: 0.8em;
+    font-weight: 700;
+    text-align: right;
 }
 
 
@@ -120,6 +126,19 @@
     display: flex;
     justify-content: flex-end;
     margin: 1.5rem 0px 0px 0px;
+}
+
+#tasks-wip-box article {
+    cursor: grab;
+}
+
+#tasks-wip-box article.dragged {
+    cursor: grabbing;
+    opacity: 0.7;
+}
+
+#tasks-done.dragover {
+    outline: 4px solid green;
 }
 
 #tasks-wip-box button {

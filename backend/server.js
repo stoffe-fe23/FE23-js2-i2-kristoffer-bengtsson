@@ -9,7 +9,7 @@ import express from "express";
 import cors from "cors";
 import tasksRouter from "./modules/endpoints.js";
 import { logRequestToFile, logErrorToFile } from './modules/serverlog.js';
-
+import { createSocketServer } from './modules/websocket.js';
 
 
 const app = express();
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 // Log requests to the serverlog.txt file
-app.use(logRequestToFile);
+// app.use(logRequestToFile);
 
 // Serve the frontend client files in the docs folder at the root path: http://localhost:3000/
 app.use(express.static('./frontend/docs'));
@@ -35,8 +35,9 @@ app.use((err, req, res, next) => {
 })
 
 // Start the server on port 3000
-app.listen(3000, () => {
+const server = app.listen(3000, () => {
     console.log("Running node server. View page at: http://localhost:3000/");
+    createSocketServer(server);
 });
 
 

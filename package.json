@@ -1,6 +1,6 @@
 {
   "name": "fe23-js2-i2-kristoffer-bengtsson",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Inlämningsuppgift 2 - Scrum Board",
   "type": "module",
   "scripts": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "express-validator": "^7.0.1"
+    "express-validator": "^7.0.1",
+    "ws": "^8.16.0"
   }
 }

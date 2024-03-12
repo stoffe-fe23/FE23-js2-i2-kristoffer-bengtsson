@@ -8,6 +8,7 @@
 import { loadTasks, saveNewTask, assignTask, setTaskDone, deleteTask } from "./tasksdb.js";
 import { Router } from "express";
 import { logErrorToFile } from './serverlog.js';
+import { broadcastUpdateNotification } from './websocket.js';
 import {
     handleValidationErrors,
     newTaskValidators,
@@ -46,6 +47,7 @@ tasksRouter.post("/add", newTaskValidators, handleValidationErrors, (req, res) =
     }
 
     saveNewTask(newTask).then(() => {
+        broadcastUpdateNotification({ type: "new", data: newTask });
         res.json(newTask);
     }).catch((error) => {
         logErrorToFile(req, `Unable to save new task. (${error.message})`);
@@ -58,7 +60,8 @@ tasksRouter.post("/add", newTaskValidators, handleValidationErrors, (req, res) =
 ///////////////////////////////////////////////////////////////////////////////////
 // Assign a name to a task
 tasksRouter.patch("/assign", assignTaskValidators, handleValidationErrors, (req, res) => {
-    assignTask(req.body.taskid, req.body.assigned).then(() => {
+    assignTask(req.body.taskid, req.body.assigned).then((assignedTask) => {
+        broadcastUpdateNotification({ type: "assign", data: assignedTask });
         res.json(req.body);
     }).catch((error) => {
         logErrorToFile(req, `Unable to assign task. (${error.message})`)
@@ -71,7 +74,8 @@ tasksRouter.patch("/assign", assignTaskValidators, handleValidationErrors, (req,
 ///////////////////////////////////////////////////////////////////////////////////
 // Mark a task as completed
 tasksRouter.patch("/done/:taskid", doneTaskValidators, handleValidationErrors, (req, res) => {
-    setTaskDone(req.params.taskid).then(() => {
+    setTaskDone(req.params.taskid).then((doneTask) => {
+        broadcastUpdateNotification({ type: "done", data: doneTask });
         res.json({ taskid: req.params.taskid, state: "done" });
     }).catch((error) => {
         logErrorToFile(req, `Unable to mark task as done. (${error.message})`)
@@ -85,6 +89,7 @@ tasksRouter.patch("/done/:taskid", doneTaskValidators, handleValidationErrors, (
 // Remove a task
 tasksRouter.delete("/delete/:taskid", deleteTaskValidators, handleValidationErrors, (req, res) => {
     deleteTask(req.params.taskid).then(() => {
+        broadcastUpdateNotification({ type: "deleted", data: { taskid: req.params.taskid } });
         res.json({ taskid: req.params.taskid, state: "deleted" });
     }).catch((error) => {
         logErrorToFile(req, `Unable to delete task. (${error.message})`)

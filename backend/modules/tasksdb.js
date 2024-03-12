@@ -50,6 +50,7 @@ export async function assignTask(taskId, assignedTo) {
                 foundTask.assigned = assignedTo;
                 foundTask.state = 'wip';
                 await saveTasks(taskData);
+                return foundTask;
             }
         }
     }
@@ -66,6 +67,7 @@ export async function setTaskDone(taskId) {
             if (foundTask) {
                 foundTask.state = 'done';
                 await saveTasks(taskData);
+                return foundTask;
             }
         }
     }

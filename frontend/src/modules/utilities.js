@@ -6,6 +6,54 @@
     My general utility functions module (trimmed down to only what is used here)
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// Get date in readable format from a timestamp. (YYYY-MM-DD HH:II:SS)
+export function timestampToDateTime(timestamp, locale = 'sv-SE') {
+    const dateObj = new Date(timestamp);
+    const formatOptions = {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
+    };
+
+    return new Intl.DateTimeFormat(locale, formatOptions).format(dateObj);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Create and return (or attach) a HTML element based on a template.
+//  - templateId is the ID of the <template> tag in the HTML file to use.
+//  - container is the parent element to insert the new element into.
+//  - values is an object where the key is a classname and the value the text
+//    to set as innerText of the matching element within the new object.
+export function createHTMLFromTemplate(templateId, container = null, values = {}, attributes = null, allowHTML = false) {
+    const newElement = document.getElementById(templateId).content.firstElementChild.cloneNode(true);
+
+    for (const key in values) {
+        const targetElement = newElement.querySelector(`.${key}`);
+        if (targetElement)
+            targetElement[allowHTML ? "innerHTML" : "innerText"] = values[key];
+    }
+    if (attributes) {
+        for (const key in attributes) {
+            const attr = newElement.querySelector(`[${key}]`);
+            if (newElement.getAttribute(key)) {
+                newElement.setAttribute(key, attributes[key]);
+            }
+            else if (attr) {
+                attr.setAttribute(key, attributes[key]);
+            }
+        }
+    }
+    if (container) {
+        container.appendChild(newElement);
+    }
+    return newElement;
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // Oneliner to create and return a new DOM element with content, optionally appending it to a parent element.

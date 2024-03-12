@@ -51,4 +51,30 @@
         </main>
         <dialog id="errors"></dialog>
     </body>
+    <template id="tpl-task-todo">
+        <article data-taskid=" " data-time=" " draggable="false" class="task-box">
+            <div class="created-time"></div>
+            <div class="task-text"></div>
+            <form class="task-assign-form">
+                <input placeholder="Assign task to" type="text" name="assigned" minlength="2" maxlength="20" required="true">
+                <button>Assign</button>
+            </form>
+        </article>
+    </template>
+    <template id="tpl-task-wip">
+        <article data-taskid=" " data-time=" " draggable="true" class="task-box">
+            <div class="created-time"></div>
+            <div class="task-text"></div>
+            <div class="assigned-to"></div>
+            <div class="task-button-wrapper"><button>Done »</button></div>
+        </article>
+    </template>
+    <template id="tpl-task-done">
+        <article data-taskid=" " data-time=" " draggable="false" class="task-box">
+            <div class="created-time"></div>
+            <div class="task-text"></div>
+            <div class="assigned-to"></div>
+            <div class="task-delete-wrapper"><button>X</button></div>
+        </article>
+    </template>
 </html>

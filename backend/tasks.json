@@ -78,5 +78,21 @@
         "category": "ux",
         "message": "Ett riktigt långt \"task\"-meddelande här. Lorem, ipsum dolor sit amet consectetur adipisicing elit.  Recusandae repellendus est autem nobis dolore velit ipsa eligendi, cumque excepturi, ad ab provident consequuntur modi odit maiores tenetur quas reprehenderit a perspiciatis iste quis quo reiciendis pariatur error?  Itaque eum sapiente dolorem ducimus, perferendis velit quia repellat sunt minima voluptates a harum non sed molestiae incidunt aspernatur ullam error ipsa eos quam quaerat iure ut placeat quasi? Consequatur quidem nulla excepturi culpa optio. Deleniti consequatur dolores repellendus possimus ducimus corrupti, harum cupiditate eos dicta earum. Atque asperiores nobis ea illum itaque voluptatibus architecto amet odit recusandae fuga sit ipsum eum harum sunt, beatae accusamus laboriosam quis consectetur placeat veritatis perspiciatis aliquam ipsam. Aspernatur est eligendi facilis quaerat, earum rerum repellat doloremque illum placeat et hic minus inventore porro voluptas deserunt",
         "assigned": "Lorem Ipsum"
+    },
+    {
+        "taskid": "60154543-710d-4a51-b7a3-1871d94e484f",
+        "time": 1710147802560,
+        "state": "done",
+        "category": "backend",
+        "message": "En liten testuppgift",
+        "assigned": "Funkar detta?"
+    },
+    {
+        "taskid": "25141c7a-e296-4521-96fd-aa2f720dd587",
+        "time": 1710149278544,
+        "state": "done",
+        "category": "backend",
+        "message": "foo?",
+        "assigned": "coo"
     }
 ]
