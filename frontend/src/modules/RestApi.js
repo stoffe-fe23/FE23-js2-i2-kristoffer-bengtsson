@@ -16,6 +16,9 @@ export default class RestApi {
         this.#urlSuffix = urlSuffix;
     }
 
+    get baseUrl() {
+        return this.#urlBase;
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     // Send GET request to API

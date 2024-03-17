@@ -7,9 +7,8 @@
 */
 import TaskManager from './modules/TaskManager.js';
 
-
+let dragDoneCounter = 0;
 const taskManager = new TaskManager('http://localhost:3000/tasks');
-// const taskManager = new TaskManager('http://192.168.1.3:3000/tasks');
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -78,6 +77,7 @@ function onDragDropTask(event) {
             if (event.target.matches('article')) {
                 event.target.classList.add("dragged");
                 event.dataTransfer.setData("text", event.target.getAttribute("data-taskid"));
+                dragDoneCounter = 0;
             }
             break;
         case "dragend":
@@ -86,23 +86,31 @@ function onDragDropTask(event) {
             }
             break;
         case "dragover":
-            event.preventDefault(); // Needed or the drop event will not trigger
+            // Needed or the drop event will not trigger
+            event.preventDefault();
             break;
         case "dragenter":
-            event.currentTarget.classList.add("dragover");
+            showDragIndicator(event.currentTarget, ++dragDoneCounter);
             break;
         case "dragleave":
-            if (event.currentTarget == event.target) {
-                event.currentTarget.classList.remove("dragover");
-            }
+            showDragIndicator(event.currentTarget, --dragDoneCounter);
             break;
         case "drop":
             const taskId = event.dataTransfer.getData("text");
             if (taskId) {
                 taskManager.setTaskDone(taskId);
             }
-            event.currentTarget.classList.remove("dragover");
+            showDragIndicator(event.currentTarget, --dragDoneCounter);
             break;
+    }
+}
+
+function showDragIndicator(elem, counter) {
+    if (counter && !elem.classList.contains("dragover")) {
+        elem.classList.add("dragover");
+    }
+    else if (!counter && elem.classList.contains("dragover")) {
+        elem.classList.remove("dragover");
     }
 }
 

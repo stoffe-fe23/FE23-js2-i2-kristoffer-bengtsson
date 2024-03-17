@@ -17,12 +17,8 @@ export default class TaskManager {
 
 
     constructor(apiUrl) {
-        const url = new URL(apiUrl);
-
         this.api = new RestApi(apiUrl);
-
-        this.socketClient = new WebSocket(`ws://${url.hostname}:${url.port}/updates`);
-        this.socketClient.addEventListener("message", this.#onUpdateBroadcast.bind(this));
+        this.#initSocketConnection(apiUrl);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,6 +84,35 @@ export default class TaskManager {
         if (typeof onAssignTaskHandler == "function") {
             this.#onAssignTask = onAssignTaskHandler;
         }
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Start a websocket connection with the server to listen for task updates. 
+    #initSocketConnection(apiUrl) {
+        const url = new URL(apiUrl);
+        this.socketClient = new WebSocket(`ws://${url.hostname}:${url.port}/updates`);
+        this.socketClient.addEventListener("message", this.#onUpdateBroadcast.bind(this));
+        this.socketClient.addEventListener("close", this.#onSocketClosed.bind(this));
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Websocket connection closed, try to reconnect in 4 seconds. 
+    #onSocketClosed(event) {
+        setTimeout(this.#restartSocketConnection.bind(this), 4000);
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Reinitialize the websocket connection to server. 
+    #restartSocketConnection() {
+        console.log("Reinitializing server connection...");
+        if (this.socketClient && (this.socketClient.readyState != WebSocket.CLOSED) && (this.socketClient.readyState != WebSocket.CLOSING)) {
+            this.socketClient.close();
+        }
+        this.socketClient = null;
+        this.#initSocketConnection(this.api.baseUrl);
     }
 
 

@@ -80,19 +80,11 @@
         "assigned": "Lorem Ipsum"
     },
     {
-        "taskid": "60154543-710d-4a51-b7a3-1871d94e484f",
-        "time": 1710147802560,
-        "state": "done",
-        "category": "backend",
-        "message": "En liten testuppgift",
-        "assigned": "Funkar detta?"
-    },
-    {
-        "taskid": "25141c7a-e296-4521-96fd-aa2f720dd587",
-        "time": 1710149278544,
-        "state": "done",
-        "category": "backend",
-        "message": "foo?",
-        "assigned": "coo"
+        "taskid": "ec072557-f6fc-4fff-9286-0e9cfb9d2c8d",
+        "time": 1710664335692,
+        "state": "wip",
+        "category": "frontend",
+        "message": "Funkar såklart när jag försöker felsöka...",
+        "assigned": "Typiskt"
     }
 ]
